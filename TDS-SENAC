@@ -1,24 +1,24 @@
 create database trabalho_do_rick
 use trabalho_do_rick
 
-create table trainer(
-         ID_Trainer int not null primary key acuto_increment,
+create table treinador(
+         ID_Treinador int not null primary key acuto_increment,
          nome varchar(50),
          Badge_amount int not null,
          Pokemon_amount int not null,
          Pokemons_on_Team int not null
     );
-  create table pokeball_BD(
-		ID_Pokeball int not null primary key auto_increment,
+  create table pokeball_HD(
+	ID_Pokeball int not null primary key auto_increment,
         quantidade int,
         tipo varchar(50)
     );
-  create table  ITENS_BD(
+  create table  ITENS_HD(
         ID_itens int not null primary key auto_increment,
         quantidade int,
 		tipo varchar(50)
     );
-    create table HEALING_BD(
+    create table HEALING_HD(
 		ID_healing int not null primary key auto_increment,
         quantidade int,
 		tipo varchar(50)
@@ -37,144 +37,83 @@ create table trainer(
         nivel int not null,
         lendario varchar(50)
     );
-        create table Evo_Stone(
-		ID_Evo_Stone int not null primary key auto_increment,
+        create table BLUE_LOCK(
+		ID_BLUE_LOCK int not null primary key auto_increment,
         quantidade int,
 		tipo varchar(50)
         );
         
-        select*from trainer;
-        select*from pokeball_BD;
-        select*from ITENS_BD;
-        select*from HEALING_BD;
+        select*from treinador;
+        select*from pokeball_HD;
+        select*from ITENS_HD;
+        select*from HEALING_HD;
         select*from GYM;
         select*from POKEMON;
-        select*from Evo_Stone;
+        select*from BLUE_LOCK;
         
-        
--- 5 especifcar as chaves primarias e estrangeiras
-
-
-        
--- 6 trazer cinco consultas com inner
-        
-select trainer.nome,POKEMON.tipo 
-from trainer inner join POKEMON on trainer.ID_Trainer= POKEMON.ID_pokemon
-where tipo like '%dragão%';
+select treinador.nome,POKEMON.tipo 
+from trainer inner join POKEMON on treinador.ID_Treinador= POKEMON.ID_pokemon
+where tipo like '%Fogo%';
        
--- mostra todos os treinadores que tem pokemons do tipo dragão
        
-select trainer.nome,ITENS_BD.tipo 
-from trainer inner join ITENS_BD on trainer.ID_Trainer= ITENS_BD.ID_itens
+select treinador.nome,ITENS_BD.tipo 
+from trainer inner join ITENS_HD on treinador.ID_Treinador= ITENS_HD.ID_itens
 where tipo like 'ETHER';
-       
--- mostra o treinador que tem o item ether
-       
-select trainer.nome,POKEMON.nivel 
-from trainer inner join POKEMON on trainer.ID_Trainer= POKEMON.ID_pokemon
+              
+select treinador.nome,POKEMON.nivel 
+from trainer inner join POKEMON on treinador.ID_Treinador= POKEMON.ID_pokemon
 where nivel >=30 ;
        
--- motra os treinadores que tem pokemons com nivel 30 ou +
-       
-select trainer.nome,EVO_STONE.tipo 
-from trainer inner join EVO_STONE on trainer.ID_Trainer= EVO_STONE.ID_Evo_Stone
+select treinador.nome,BLUE_LOCK.tipo 
+from trainer inner join BLUE_lOCK on treinador.ID_Treinador= BLUE_LOCK.ID_BLUE_LOCK
 where tipo like 'fogo' ;
        
--- mostra o treinador que tem um evo stone de fogo
-       
-select trainer.nome,POKEMON.tipo 
-from trainer inner join POKEMON on trainer.ID_Trainer= POKEMON.ID_pokemon
+select treinador.nome,POKEMON.tipo 
+from trainer inner join POKEMON on treinador.ID_Treinador= POKEMON.ID_pokemon
 where tipo like '%fogo%';
+           
+select*from Treinador
+order by nome asc; 
        
--- mostra os treinadores que tem pokemons que tem tipo fogo
-       
--- 7 trazer cinco consultas com order by
-      
-select*from trainer
-order by nome asc;
-       
--- mostra o nomes dos treinadores em orfem alfabetica
-       
-select*from trainer
+select*from Treinador
 order by Badge_amount desc;
        
--- mostra quem tem mais pra quem tem menos insignias
-       
-select*from trainer
+select*from Treinador
 order by Pokemon_amount desc;
-       
--- mostra em ordem de quem tem mais pokemons
-       
-select*from trainer
+           
+select*from Treinador
 order by Pokemons_on_Team desc;
-       
--- mostra quem tem mais pokemons no time
-       
+            
 select*from POKEMON
 order by nome desc;
-	   
--- mostra o nome dos pokemons em ordem decrescente
-       
--- 8 trazer cinco consultas com group by
-       
+	         
 select nome, pokemons_on_Team 
 from  trainer where Badge_amount = 8 group by nome;
 		
--- mostra quantos pokemons no time os treinadores com 8 insignias tem
-
 select lider, tipo
 from  GYM where insignia like 'insignia do trio%' group by lider;
 
--- mostra todos os lideres e os tipos do ginasio que da a insignia do trio
-
-select quantidade
 from  HEALING_BD where tipo like '%POTION%' group by quantidade;
-
--- mostra a quantidades de todos os tipos de potions
 
 select nome, tipo
 from  POKEMON where lendario= 'true' group by nome;
-
--- mostra o nome e o tipo dos pokemons lendarios
-       
+    
 select tipo,quantidade
 from  ITENS_BD where tipo like '%ETHER%' group by tipo;      
 
--- mostra a quantidade de todos os tipos de ether 
+select round(AVG(badge_amount)) from treinador;
 
--- 9 trazer tres consultas que combinem order by e join
+select round(AVG(Pokemon_amount)) from treinador;
 
--- 10 trazer sete consultas com funções matematica (avg,e.g,sum)
+select round(AVG(Pokemons_on_Team)) from treinador;
 
-select round(AVG(badge_amount)) from trainer;
+select min(badge_amount),max(badge_amount) from treinador;
 
--- media de insinias
-
-select round(AVG(Pokemon_amount)) from trainer;
-
--- media de pokemons capturados
-
-select round(AVG(Pokemons_on_Team)) from trainer;
-
--- a media de pokemons nos times
-
-select min(badge_amount),max(badge_amount) from trainer;
-
--- mostra o numero minimo e maximo de insignias
-
-select sum(quantidade) from HEALING_BD;
-
--- soma todos os itens de healing
+select sum(quantidade) from HEALING_HD;
 
 select round(AVG(nivel)) from POKEMON;
 
--- mostra a media de nivel dos pokemons
-
 select max(nivel) from POKEMON;
-
--- mostra o maior level
-
--- 11 criar cinco visoes
 
 create view lendario
 as select nome, tipo
@@ -183,8 +122,6 @@ where lendario like 'true';
 
 select*from lendario;    
 
--- cria uma visão que mostra apenas pokemons lendarios e seus tipos 
-
 create view pokemons_level_um
 as select nome
 from POKEMON
@@ -192,16 +129,12 @@ where nivel= 1;
 
 select*from pokemons_level_um;
 
--- mostra o nome de todos os pokemons level um
-
-create view liders_do_tipo_dragao
+create view liders_do_tipo_Fogo
 as select lider
 from GYM
-where tipo like '%dragao%';
+where tipo like '%Fogo%';
 
-select*from liders_do_tipo_dragao;
-
--- mostra os lideres que treinam tpos dragoes
+select*from liders_do_tipo_Fogo;
 
 create view treinadores_times
 as select nome, Pokemons_on_Team
@@ -210,63 +143,52 @@ where Pokemon_amount >= 156;
 
 select*from treinadores_times;
  
--- mostra a quantidade de pokemons nos times de quem tem mais de 156
 
 create view tipos_de_pokebolas_com_mais_de_vinte
 as select tipo
-from pokeball_BD
+from pokeball_HD
 where quantidade >= 20;
 
 select*from tipos_de_pokebolas_com_mais_de_vinte;
 
--- mostra os tipos de pokebolas que tem 20 ou mais
-
- -- 12 criar cinco savepoints 
- 
  start transaction;
  
  savepoint savepoint1;
- insert into ITENS_BD values(16,666,'pokeball');
+ insert into ITENS_HD values(16,666,'pokeball');
  
  savepoint savepoint2;
- insert into ITENS_BD values(17,22,'masterball');
+ insert into ITENS_HD values(17,22,'masterball');
  
  savepoint savepoint3;
- insert into ITENS_BD values(18,100,'potion');
+ insert into ITENS_HD values(18,100,'potion');
  
  savepoint savepoint4;
- insert into ITENS_BD values(19,30,'stone');
+ insert into ITENS_HD values(19,30,'stone');
  
  savepoint savepoint5;
- insert into ITENS_BD values(20,10,'ultraball');
- -- 13 criar tres usuarios distintos      
- 
- create user 'so pode ver'@'localhost';
- 
+ insert into ITENS_HD values(20,10,'ultraball');
+     
  grant all on lendario.* to 'so pode ver'@'localhost';
  grant all on pokemons_level_um.* to 'so pode ver'@'localhost';
- grant all on liders_do_tipo_dragao.* to 'so pode ver'@'localhost';
+ grant all on liders_do_tipo_Fogo.* to 'so pode ver'@'localhost';
  grant all on treinadores_times.* to 'so pode ver'@'localhost';
- grant all on tipos_de_pokebolas_com_mais_de_vinte.* to 'so pode ver'@'localhost';
- 
- -- usuario so pode ver as views
+ grant all on tipos_de_pokebolas_com_mais_de_trinta.* to 'so pode ver'@'localhost';
  
  create user 'pode so inserir'@'localhost';
  
  grant insert on lendario.* to 'pode so inserir'@'localhost';
  grant insert on pokemons_level_um.* to 'pode so inserir'@'localhost';
- grant insert on liders_do_tipo_dragao.* to 'pode so inserir'@'localhost';
+ grant insert on liders_do_tipo_Fogo.* to 'pode so inserir'@'localhost';
  grant insert on treinadores_times.* to 'pode so inserir'@'localhost';
- grant insert on tipos_de_pokebolas_com_mais_de_vinte.* to 'pode so inserir'@'localhost';
+ grant insert on tipos_de_pokebolas_com_mais_de_trinta.* to 'pode so inserir'@'localhost';
  
- -- usuario so pode inserir
- 
+
  create user 'so pode ver'@'local host';
  
 grant select on lendario.* to 'so pode ver'@'localhost';
 grant select on pokemons_level_um.* to 'so pode ver'@'localhost';
-grant select on liders_do_tipo_dragao.* to 'so pode ver'@'localhost';
+grant select on liders_do_tipo_Fogo.* to 'so pode ver'@'localhost';
 grant select on treinadores_times.* to 'so pode ver'@'localhost';
-grant select on tipos_de_pokebolas_com_mais_de_vinte.* to 'so pode ver'@'localhost';
+grant select on tipos_de_pokebolas_com_mais_de_trinta.* to 'so pode ver'@'localhost';
  
- -- usuario so pode ver
+
