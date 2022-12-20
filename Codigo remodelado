@@ -1,0 +1,180 @@
+create database trabalho_do_rick
+use trabalho_do_rick
+
+create table treinador(
+         ID_Treinador int not null primary key acuto_increment,
+         nome varchar(50),
+         Badge_amount int not null,
+         Pokemon_amount int not null,
+         Pokemons_on_Team int not null
+    );
+  create table pokeball_BD(
+	ID_Pokeball int not null primary key auto_increment,
+        quantidade int,
+        tipo varchar(50)
+    );
+  create table  ITENS_BD(
+        ID_itens int not null primary key auto_increment,
+        quantidade int,
+		tipo varchar(50)
+    );
+    create table HEALING_BD(
+		ID_healing int not null primary key auto_increment,
+        quantidade int,
+		tipo varchar(50)
+	@@ -37,171 +37,104 @@ create table trainer(
+        nivel int not null,
+        lendario varchar(50)
+    );
+        create table BLUE_LOCK(
+		ID_BLUE_LOCK int not null primary key auto_increment,
+        quantidade int,
+		tipo varchar(50)
+        );
+
+        select*from treinador;
+        select*from pokeball_BD;
+        select*from ITENS_BD;
+        select*from HEALING_BD;
+        select*from GYM;
+        select*from POKEMON;
+        select*from BLUE_LOCK;
+
+select treinador.nome,POKEMON.tipo 
+from trainer inner join POKEMON on treinador.ID_Treinador= POKEMON.ID_pokemon
+where tipo like '%Fogo%';
+
+
+select treinador.nome,ITENS_BD.tipo 
+from trainer inner join ITENS_BD on treinador.ID_Treinador= ITENS_BD.ID_itens
+where tipo like 'ETHER';
+
+select treinador.nome,POKEMON.nivel 
+from trainer inner join POKEMON on treinador.ID_Treinador= POKEMON.ID_pokemon
+where nivel >=30 ;
+
+select treinador.nome,BLUE_LOCK.tipo 
+from trainer inner join BLUE_lOCK on treinador.ID_Treinador= BLUE_LOCK.ID_BLUE_LOCK
+where tipo like 'fogo' ;
+
+select treinador.nome,POKEMON.tipo 
+from trainer inner join POKEMON on treinador.ID_Treinador= POKEMON.ID_pokemon
+where tipo like '%fogo%';
+
+select*from Treinador
+order by nome asc; 
+
+select*from Treinador
+order by Badge_amount desc;
+
+select*from Treinador
+order by Pokemon_amount desc;
+
+select*from Treinador
+order by Pokemons_on_Team desc;
+
+select*from POKEMON
+order by nome desc;
+
+select nome, pokemons_on_Team 
+from  trainer where Badge_amount = 8 group by nome;
+
+select lider, tipo
+from  GYM where insignia like 'insignia do trio%' group by lider;
+
+from  HEALING_BD where tipo like '%POTION%' group by quantidade;
+
+select nome, tipo
+from  POKEMON where lendario= 'true' group by nome;
+
+select tipo,quantidade
+from  ITENS_BD where tipo like '%ETHER%' group by tipo;      
+
+select round(AVG(badge_amount)) from treinador;
+
+select round(AVG(Pokemon_amount)) from treinador;
+
+select round(AVG(Pokemons_on_Team)) from treinador;
+
+select min(badge_amount),max(badge_amount) from treinador;
+
+select sum(quantidade) from HEALING_BD;
+
+select round(AVG(nivel)) from POKEMON;
+
+select max(nivel) from POKEMON;
+
+create view lendario
+as select nome, tipo
+from POKEMON
+where lendario like 'true'; 
+
+select*from lendario;    
+
+create view pokemons_level_um
+as select nome
+from POKEMON
+where nivel= 1;
+
+select*from pokemons_level_um;
+
+create view liders_do_tipo_Fogo
+as select lider
+from GYM
+where tipo like '%Fogo%';
+
+select*from liders_do_tipo_Fogo;
+
+create view treinadores_times
+as select nome, Pokemons_on_Team
+	@@ -210,63 +143,52 @@ where Pokemon_amount >= 156;
+
+select*from treinadores_times;
+
+
+create view tipos_de_pokebolas_com_mais_de_vinte
+as select tipo
+from pokeball_BD
+where quantidade >= 20;
+
+select*from tipos_de_pokebolas_com_mais_de_vinte;
+
+ start transaction;
+
+ savepoint savepoint1;
+ insert into ITENS_BD values(16,666,'pokeball');
+
+ savepoint savepoint2;
+ insert into ITENS_BD values(17,22,'masterball');
+
+ savepoint savepoint3;
+ insert into ITENS_BD values(18,100,'potion');
+
+ savepoint savepoint4;
+ insert into ITENS_BD values(19,30,'stone');
+
+ savepoint savepoint5;
+ insert into ITENS_BD values(20,10,'ultraball');
+
+ grant all on lendario.* to 'so pode ver'@'localhost';
+ grant all on pokemons_level_um.* to 'so pode ver'@'localhost';
+ grant all on liders_do_tipo_Fogo.* to 'so pode ver'@'localhost';
+ grant all on treinadores_times.* to 'so pode ver'@'localhost';
+ grant all on tipos_de_pokebolas_com_mais_de_trinta.* to 'so pode ver'@'localhost';
+
+ create user 'pode so inserir'@'localhost';
+
+ grant insert on lendario.* to 'pode so inserir'@'localhost';
+ grant insert on pokemons_level_um.* to 'pode so inserir'@'localhost';
+ grant insert on liders_do_tipo_Fogo.* to 'pode so inserir'@'localhost';
+ grant insert on treinadores_times.* to 'pode so inserir'@'localhost';
+ grant insert on tipos_de_pokebolas_com_mais_de_trinta.* to 'pode so inserir'@'localhost';
+
+
+ create user 'so pode ver'@'local host';
+
+grant select on lendario.* to 'so pode ver'@'localhost';
+grant select on pokemons_level_um.* to 'so pode ver'@'localhost';
+grant select on liders_do_tipo_Fogo.* to 'so pode ver'@'localhost';
+grant select on treinadores_times.* to 'so pode ver'@'localhost';
+grant select on tipos_de_pokebolas_com_mais_de_trinta.* to 'so pode ver'@'localhost';
