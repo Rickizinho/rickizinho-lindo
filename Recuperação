@@ -37,8 +37,8 @@ create table trainer(
         nivel int not null,
         lendario varchar(50)
     );
-        create table Evo_Stone(
-		ID_Evo_Stone int not null primary key auto_increment,
+        create table Blue_Lock(
+		ID_Blue_Lock int not null primary key auto_increment,
         quantidade int,
 		tipo varchar(50)
         );
@@ -49,7 +49,7 @@ create table trainer(
         select*from HEALING_BD;
         select*from GYM;
         select*from POKEMON;
-        select*from Evo_Stone;
+        select*from Blue_Lock;
         
         
 -- 5 especifcar as chaves primarias e estrangeiras
@@ -90,11 +90,11 @@ where nivel >=30 ;
        
 -- motra os treinadores que tem pokemons com nivel 30 ou +
        
-select trainer.nome,EVO_STONE.tipo 
-from trainer inner join EVO_STONE on trainer.ID_Trainer= EVO_STONE.ID_Evo_Stone
+select trainer.nome,Blue_Lock.tipo 
+from trainer inner join Blue_Lock on trainer.ID_Trainer= Blue_Lock.ID_Blue_Lock
 where tipo like 'fogo' ;
        
--- mostra o treinador que tem um evo stone de fogo
+-- mostra o treinador que tem um Blue lock de fogo
        
 select trainer.nome,POKEMON.tipo 
 from trainer inner join POKEMON on trainer.ID_Trainer= POKEMON.ID_pokemon
